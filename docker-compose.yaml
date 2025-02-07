@@ -1,0 +1,44 @@
+name: hello
+#Defines the services in the multi-image container being built
+services:
+    #First hello program
+    hello1:
+        build: . # builds the image from a Dockerfile (in current directory)
+        image: hello1:v0.2 # uses a local image that you created earlier
+        #Don't need env variables for now but this is how you would do it
+        environment:
+            ENVIRONMENT_VARIABLE: value
+        #Maps port 8888 with the container's port 80 (accessible on localhost:8888)
+        ports:
+            - "8888:80"
+        #Define the volume and mount it onto tmp
+        # volumes:
+        #     - hello1-volume:/tmp
+        #Defines the network that the service is accessible on
+        networks:
+            - lab3-network
+
+    #Second service definition
+    hello2:
+        build: . # builds the image from a Dockerfile (in current directory)
+        image: hello1:v0.2 # uses a local image that you created earlier
+        #Don't need env variables for now but this is how you would do it
+        environment:
+            ENVIRONMENT_VARIABLE: value
+        #Maps port 7777 with the container's port 80 (accessible on localhost:8888)
+        ports:
+            - "7777:80"
+        #Define the volume and mount it onto tmp
+        # volumes:
+        #     - hello2-volume:/tmp
+        #Defines the network that the service is accessible on
+        networks:
+            - lab3-network
+
+#Define the volumes
+volumes:
+    hello1-volume:
+    hello2-volume:
+
+networks:
+    lab3-network:
